@@ -1,4 +1,4 @@
-package com.example.booksapp;
+package com.example.booksapp.Configuration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

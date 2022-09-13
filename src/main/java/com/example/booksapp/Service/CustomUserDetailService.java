@@ -1,5 +1,8 @@
-package com.example.booksapp;
+package com.example.booksapp.Service;
 
+import com.example.booksapp.Model.CustomUserDetails;
+import com.example.booksapp.Model.User;
+import com.example.booksapp.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.core.userdetails.UserDetails;

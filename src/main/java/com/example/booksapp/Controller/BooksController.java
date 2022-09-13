@@ -1,5 +1,7 @@
-package com.example.booksapp;
+package com.example.booksapp.Controller;
 
+import com.example.booksapp.Model.User;
+import com.example.booksapp.Service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
