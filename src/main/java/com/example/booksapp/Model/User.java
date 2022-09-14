@@ -1,16 +1,17 @@
 package com.example.booksapp.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-import org.springframework.stereotype.Component;
+
 
 
 import java.time.LocalDateTime;
 
-@Document
-@Component
+@Document(collection = "allbooks")
 @Data
+@AllArgsConstructor
 public class User {
     @MongoId
     private String id;
@@ -18,4 +19,7 @@ public class User {
     private String password;
     private String role;
     private LocalDateTime addedToSystem;
+    private Boolean hasBookBorrowed;
+
+
 }

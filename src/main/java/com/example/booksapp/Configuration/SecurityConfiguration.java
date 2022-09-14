@@ -2,51 +2,65 @@ package com.example.booksapp.Configuration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguraiton  {
+public class SecurityConfiguration {
 
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    public SecurityConfiguraiton(UserDetailsService userDetailsService) {
+
+    @Autowired
+    public SecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
+
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider=
+    AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider();
-    provider.setUserDetailsService(userDetailsService);
-    provider.setPasswordEncoder(new BCryptPasswordEncoder());
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(encoder());
 
-    return provider;
+        return provider;
 
     }
 
 
-    protected void configure(HttpSecurity http)throws Exception{
-        http.authorizeRequests()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable().
+                authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
                 .antMatchers("/t")
                 .hasAuthority("USER")
-                .antMatchers("/admin")
+                .antMatchers(HttpMethod.POST,"/users")
+                .hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/users/**")
                 .hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
+        return http.build();
     }
+@Bean
+    PasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
+}
 
 }

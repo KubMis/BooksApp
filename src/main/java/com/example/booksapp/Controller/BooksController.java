@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class BooksController {
@@ -15,7 +17,8 @@ public class BooksController {
     private final UserService userService;
 
     @GetMapping("/t")
-    public String testapi(String t){
+    public String testUser(){
+
         return "Test seems to be working";
     }
 
@@ -23,5 +26,16 @@ public class BooksController {
     public User addUser(@RequestBody User user){
 
         return userService.addUser(user);
+    }
+
+    @GetMapping("/users")
+    public List<User> getALlUsers(){
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/admin")
+    public String testAdmin(){
+
+        return "Secret message for admin";
     }
 }
