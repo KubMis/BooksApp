@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -23,13 +24,13 @@ public class SecurityConfiguration {
 
 
     @Autowired
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
+    protected SecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
 
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
+   protected AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
@@ -41,9 +42,11 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().
-                authorizeRequests()
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+                .authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
                 .antMatchers("/t")
@@ -59,7 +62,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 @Bean
-    PasswordEncoder encoder(){
+   protected PasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
 }
 

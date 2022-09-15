@@ -2,6 +2,7 @@ package com.example.booksapp.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -15,9 +16,10 @@ import java.time.LocalDateTime;
 public class User {
     @MongoId
     private String id;
+    @Indexed(unique=true)
     private String username;
     private String password;
-    private String role;
+    private Role role;
     private LocalDateTime addedToSystem;
     private Boolean hasBookBorrowed;
 
