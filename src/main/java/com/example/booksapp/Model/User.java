@@ -20,7 +20,7 @@ public class User {
     private String username;
     private String password;
     private Role role;
-    private LocalDateTime addedToSystem;
+    private String addedToSystem;
     private Boolean hasBookBorrowed;
 
 

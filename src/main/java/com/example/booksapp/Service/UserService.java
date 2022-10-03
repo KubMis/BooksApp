@@ -18,7 +18,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User addUser(User newUser){
-        newUser.setAddedToSystem(LocalDateTime.now());
+        newUser.setAddedToSystem(LocalDateTime.now().toString());
         newUser.setRole(newUser.getRole());
         newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
         return repository.save(newUser);

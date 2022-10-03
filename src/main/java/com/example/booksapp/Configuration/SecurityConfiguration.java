@@ -51,6 +51,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .antMatchers("/t")
                 .hasAuthority("USER")
+                .antMatchers(HttpMethod.GET,"/admin/**")
+                .hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST,"/users")
                 .hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/users/**")
