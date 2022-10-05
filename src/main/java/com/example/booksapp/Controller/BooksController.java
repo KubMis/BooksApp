@@ -17,7 +17,6 @@ public class BooksController {
     @GetMapping("/users")
     public List<User> getALlUsers(){
         return userService.getAllUsers();
-
     }
     @PostMapping("/users")
     public User addUser(@RequestBody User user){
@@ -51,4 +50,10 @@ public class BooksController {
     public String testUser(){
         return "Test seems to be working";
     }
+
+    @DeleteMapping("/deleteall")
+    public void deleteAll(){
+        userService.deleteAllUsers();
+    }
+
 }

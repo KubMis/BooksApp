@@ -50,6 +50,9 @@ public class UserService {
         repository.deleteByUsername(username);
         }
 
-
+        public void deleteAllUsers(){
+        repository.deleteAll();
+        }
+           //used to clean db
     }
 
